@@ -1,0 +1,27 @@
+<resources>
+    <!-- Foundation -->
+    <string name="app_name">ExarControl</string>
+    <string name="Exit">Exit</string>
+    <string name="Back">Back</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="Refresh">Refresh</string>
+    <string name="send">Send</string>
+    <string name="save">Save</string>
+    <!-- Main -->
+    <string name="Welcome">Welcome!</string>
+    <string name="AuthorNotice">This app is UNOFFICIAL\nbut uses the official API</string>
+    <string name="APIT">API token</string>
+    <string name="ModLater">You can modify that later.</string>
+    <string name="Starter">Get started with the app!</string>
+    <string name="NeedHelp1">How to get API token:\nhttps://rd.oh64.moe/exagta</string>
+    <string name="JustLove">Made with &lt;3 by Oh64</string>
+    <string name="Info">App developed by Oh64\nThis app is UNOFFICIAL\nYour version is: </string>
+    <string name="TokenDel">Delete the token</string>
+    <string name="TokenError">Your token will be deleted forever!\nBye, bye!</string>
+    <string name="TokenButton">Confirm and enter a new token</string>
+    <string name="InternetError">Please connect to the internet\nto use this app</string>
+    <string name="DWY">I\'m sorry, you can\'t\nmanage players for now</string>
+    <string name="CPL">Choose a player list:</string>
+    <string name="IMPORTANTCPL">(Unable to get the list of online players at the moment)</string>
+    <string name="CommandInput">Enter a command</string>
+</resources>

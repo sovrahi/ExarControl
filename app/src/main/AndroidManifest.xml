@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/applogo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/applogo"
+        android:supportsRtl="false"
+        android:theme="@style/Theme.exarcontrol"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".AllServers"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
+
+        <activity android:name=".MainManager"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
+
+        <activity android:name=".InvalidToken"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
+
+        <activity android:name=".PlayerList"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
+
+        <activity android:name=".CreditPool"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
+
+        <activity
+            android:name=".Console"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false">
+        </activity>
+
+        <activity android:name=".Option"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
+
+        <activity android:name=".Information"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
+
+        <activity android:name=".NoInternet"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
+
+    </application>
+</manifest>
