@@ -2,14 +2,16 @@ package moe.oh64.exarcontrol;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.view.View;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,12 +33,11 @@ public class AllServers extends AppCompatActivity {
 
     private static final String API_URL = "https://api.exaroton.com/v1/servers/";
     private final Map<String, String> serverIdMap = new HashMap<>();
-    private ArrayAdapter<String> adapter;
     private final ArrayList<String> serverNames = new ArrayList<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final OkHttpClient client = new OkHttpClient();
 
-    private Button TokenDel, Refresh;
+    private Button Refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +48,13 @@ public class AllServers extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("ExarotonPrefs", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
 
-        TokenDel = findViewById(R.id.TokenDel);
+        Button tokenDel = findViewById(R.id.TokenDel);
         Refresh = findViewById(R.id.Refresh);
 
         // Fetch the list of servers
         fetchServers(token);
 
-        TokenDel.setOnClickListener(v -> TokenDel());
+        tokenDel.setOnClickListener(v -> TokenDel());
         Refresh.setOnClickListener(v -> Refreshbtn());
 
         // Retrieve and display the app version
@@ -64,10 +65,15 @@ public class AllServers extends AppCompatActivity {
             String versionName = packageInfo.versionName;
             versionOption = getString(R.string.Info) + " " + versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("AllServers", "Error fetching package info", e);
         }
         infoTextView.setText(versionOption);
 
+        // Add OnClickListener to the Info TextView
+        infoTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(AllServers.this, Information.class);
+            startActivity(intent);
+        });
     }
 
     private void fetchServers(String token) {
@@ -81,20 +87,23 @@ public class AllServers extends AppCompatActivity {
         // Execute the request asynchronously
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e("AllServers", "Failed to fetch servers", e);
                 // Display a toast message on failure
+                Refresh.setEnabled(true);
                 runOnUiThread(() -> Toast.makeText(AllServers.this, "Failed to fetch servers", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     // Parse the response data
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerResponse(responseData));
                 } else {
                     // Display a toast message on unauthorized or server error
+                    Refresh.setEnabled(true);
                     runOnUiThread(() -> Toast.makeText(AllServers.this, "Unauthorized or server error", Toast.LENGTH_SHORT).show());
                 }
             }
@@ -127,14 +136,15 @@ public class AllServers extends AppCompatActivity {
                 serverIdMap.put(serverName, serverId);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Refresh.setEnabled(true);
+            Log.e("AllServers", "Error parsing server response", e);
         }
 
         Refresh.setEnabled(true);
 
         // Setup the ListView and Adapter
         ListView listView = findViewById(R.id.server_list);
-        adapter = new ArrayAdapter<>(AllServers.this, android.R.layout.simple_list_item_1, serverNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(AllServers.this, android.R.layout.simple_list_item_1, serverNames);
         listView.setAdapter(adapter);
 
         // Handle item clicks on the ListView

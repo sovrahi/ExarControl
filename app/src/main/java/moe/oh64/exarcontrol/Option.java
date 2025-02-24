@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -21,7 +23,6 @@ import okhttp3.Response;
 public class Option extends AppCompatActivity {
 
     private EditText editTextMOTD, editTextRAM;
-    private Button btnSaveMOTD, btnSaveRAM, backButton;
 
     private String serverId;
     private String token;
@@ -38,9 +39,9 @@ public class Option extends AppCompatActivity {
         // Initialize UI elements
         editTextMOTD = findViewById(R.id.editTextMOTD);
         editTextRAM = findViewById(R.id.editTextRAM);
-        btnSaveMOTD = findViewById(R.id.btn_save_motd);
-        btnSaveRAM = findViewById(R.id.btn_save_ram);
-        backButton = findViewById(R.id.back);
+        Button btnSaveMOTD = findViewById(R.id.btn_save_motd);
+        Button btnSaveRAM = findViewById(R.id.btn_save_ram);
+        Button backButton = findViewById(R.id.back);
 
         // Retrieve server ID and token
         serverId = getIntent().getStringExtra("server_id");
@@ -82,14 +83,15 @@ public class Option extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Log.e("FetchSetting", "Failed to fetch " + type));
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleSettingResponse(type, responseData));
                 } else {
@@ -138,13 +140,13 @@ public class Option extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Log.e("SaveSetting", "Failed to save " + type));
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> Log.i("SaveSetting", type + " saved successfully"));
                 } else {

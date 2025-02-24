@@ -52,6 +52,7 @@
         android:textColor="#FFFFFF"
         android:text="@string/Info"
         android:gravity="center"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="0dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

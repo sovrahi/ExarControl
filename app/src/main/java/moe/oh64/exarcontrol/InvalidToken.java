@@ -3,7 +3,6 @@ package moe.oh64.exarcontrol;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +17,12 @@ public class InvalidToken extends AppCompatActivity {
         setContentView(R.layout.invalidtoken);
 
         Button button = findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Supprime le token des SharedPreferences
-                clearSavedToken();
+        button.setOnClickListener(v -> {
+            clearSavedToken();
 
-                // Redirige vers MainActivity
-                Intent intent = new Intent(InvalidToken.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+            Intent intent = new Intent(InvalidToken.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 

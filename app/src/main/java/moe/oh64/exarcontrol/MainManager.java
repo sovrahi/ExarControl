@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
@@ -36,8 +36,8 @@ public class MainManager extends AppCompatActivity {
     private String token;
 
     private TextView tvServerAddress, tvServerStatus, tvServerRam, tvRamPercentage, tvMOTD;
-    private Button btnStartStop, btnReboot, btnServerList, btnLogs, btnPlayerList, btnCreditPool, btnconsole, btnoption;
-    private ImageView ivServerIcon;
+    private Button btnStartStop;
+    private Button btnReboot;
 
     private WebSocket webSocket;
     private final OkHttpClient client = new OkHttpClient();
@@ -58,13 +58,13 @@ public class MainManager extends AppCompatActivity {
         tvMOTD = findViewById(R.id.motd);
         btnStartStop = findViewById(R.id.btn_start_stop);
         btnReboot = findViewById(R.id.btn_reboot);
-        btnServerList = findViewById(R.id.btn_server_list);
-        btnPlayerList = findViewById(R.id.playerlist);
-        btnCreditPool = findViewById(R.id.creditpool);
-        btnLogs = findViewById(R.id.btn_logs);
-        btnconsole = findViewById(R.id.btn_console);
-        btnoption = findViewById(R.id.option);
-        ivServerIcon = findViewById(R.id.server_icon);
+        Button btnServerList = findViewById(R.id.btn_server_list);
+        Button btnPlayerList = findViewById(R.id.playerlist);
+        Button btnCreditPool = findViewById(R.id.creditpool);
+        Button btnLogs = findViewById(R.id.btn_logs);
+        Button btnconsole = findViewById(R.id.btn_console);
+        Button btnoption = findViewById(R.id.option);
+        findViewById(R.id.server_icon);
 
         // Retrieve server ID and token
         serverId = getIntent().getStringExtra("server_id");
@@ -117,14 +117,15 @@ public class MainManager extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch server info", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerInfoResponse(responseData));
                 } else {
@@ -164,14 +165,15 @@ public class MainManager extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch server status", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerStatusResponse(responseData));
                 } else {
@@ -203,14 +205,15 @@ public class MainManager extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch MOTD", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerMOTDResponse(responseData));
                 } else {
@@ -238,14 +241,15 @@ public class MainManager extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch RAM and CPU info", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerRamAndCpuResponse(responseData));
                 } else {
@@ -278,14 +282,14 @@ public class MainManager extends AppCompatActivity {
 
         webSocket = client.newWebSocket(request, new WebSocketListener() {
             @Override
-            public void onOpen(WebSocket webSocket, Response response) {
+            public void onOpen(@NonNull WebSocket webSocket, @NonNull Response response) {
                 // Subscribe to stats stream
                 String subscribeStats = "{\"stream\":\"stats\",\"type\":\"start\"}";
                 webSocket.send(subscribeStats);
             }
 
             @Override
-            public void onMessage(WebSocket webSocket, String text) {
+            public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
                 try {
                     JSONObject json = new JSONObject(text);
                     if ("stats".equals(json.optString("stream"))) {
@@ -331,20 +335,16 @@ public class MainManager extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                // Avoid error toast loop
-                //runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch server status and RAM", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerStatusAndRamResponse(responseData));
-                } else {
-                    // Avoid error toast loop
-                    //runOnUiThread(() -> Toast.makeText(MainManager.this, "Error fetching server status and RAM", Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -386,13 +386,13 @@ public class MainManager extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainManager.this, action + " failed", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> Toast.makeText(MainManager.this, action + " completed", Toast.LENGTH_SHORT).show());
                 } else {
@@ -411,14 +411,15 @@ public class MainManager extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch server logs", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> uploadLogsToMclogs(responseData));
                 } else {
@@ -439,14 +440,15 @@ public class MainManager extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to upload logs", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleLogsUploadResponse(responseData));
                 } else {

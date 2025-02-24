@@ -2,6 +2,7 @@ package moe.oh64.exarcontrol;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
@@ -33,7 +35,6 @@ public class Console extends AppCompatActivity {
 
     private TextView consoleOutput;
     private EditText commandInput;
-    private Button sendButton, backButton;
     private ScrollView scrollView;
 
     @Override
@@ -43,8 +44,8 @@ public class Console extends AppCompatActivity {
 
         consoleOutput = findViewById(R.id.console);
         commandInput = findViewById(R.id.text_input);
-        sendButton = findViewById(R.id.send);
-        backButton = findViewById(R.id.back);
+        Button sendButton = findViewById(R.id.send);
+        Button backButton = findViewById(R.id.back);
         scrollView = findViewById(R.id.scroll_view);
 
         // Retrieve server ID and token
@@ -80,7 +81,7 @@ public class Console extends AppCompatActivity {
         webSocket = client.newWebSocket(request, new WebSocketListener() {
 
             @Override
-            public void onOpen(WebSocket webSocket, okhttp3.Response response) {
+            public void onOpen(@NonNull WebSocket webSocket, @NonNull okhttp3.Response response) {
                 // Subscribe to the console stream
                 String subscribeConsole = "{\"stream\":\"console\",\"type\":\"start\",\"data\":{\"tail\":50}}";
                 webSocket.send(subscribeConsole);
@@ -88,7 +89,7 @@ public class Console extends AppCompatActivity {
             }
 
             @Override
-            public void onMessage(WebSocket webSocket, String text) {
+            public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
                 try {
                     JSONObject json = new JSONObject(text);
                     if ("console".equals(json.optString("stream")) && "line".equals(json.optString("type"))) {
@@ -108,17 +109,18 @@ public class Console extends AppCompatActivity {
                         });
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e("Console", "Error processing WebSocket message", e);
                 }
             }
 
             @Override
-            public void onFailure(WebSocket webSocket, Throwable t, okhttp3.Response response) {
+            public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, okhttp3.Response response) {
+                Log.e("Console", "WebSocket connection error", t);
                 runOnUiThread(() -> consoleOutput.append("Connection error: " + t.getMessage() + "\n"));
             }
 
             @Override
-            public void onClosed(WebSocket webSocket, int code, String reason) {
+            public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
                 runOnUiThread(() -> consoleOutput.append("Disconnected from console\n"));
             }
         });
@@ -145,7 +147,7 @@ public class Console extends AppCompatActivity {
 
     // Method to remove command prefixes
     private String removeCommandPrefix(String text) {
-        // Remove prefixes like ">...."
+        // Remove prefixes ">...."
         return text.replaceAll("^>....", "");
     }
 }

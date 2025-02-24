@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -16,8 +15,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextToken;
     private Button buttonGo;
     private static final String PREFS_NAME = "ExarotonPrefs";
-    SharedPreferences sharedPreferences;
-    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +28,14 @@ public class MainActivity extends AppCompatActivity {
         editTextToken = findViewById(R.id.editTextTextPassword);
         buttonGo = findViewById(R.id.button);
 
-        // Vérifier si un token existe déjà
-        //String savedToken = sharedPreferences.getString("token", null);
-        //if (savedToken != null && !savedToken.isEmpty()) {
-        if (token != null && !token.isEmpty()) {
+        // Check token
+        if (!token.isEmpty()) {
             navigateToAllServer();
         }
 
-        // Désactiver le bouton par défaut
+        // Disable Button
         buttonGo.setEnabled(false);
 
-        // Activer le bouton seulement si un token est saisi
         editTextToken.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -55,14 +49,11 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        // Sauvegarder le token et naviguer vers la nouvelle activité
-        buttonGo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String token = editTextToken.getText().toString().trim();
-                saveToken(token);
-                navigateToAllServer();
-            }
+        // Save token and redirect
+        buttonGo.setOnClickListener(v -> {
+            String token1 = editTextToken.getText().toString().trim();
+            saveToken(token1);
+            navigateToAllServer();
         });
     }
 

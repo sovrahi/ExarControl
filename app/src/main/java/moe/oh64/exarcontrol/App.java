@@ -10,7 +10,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // ⚡ Vérification immédiate de la connexion Internet au démarrage
+        // Immediate internet connection check at startup
         if (!NetworkUtil.isConnected(this)) {
             redirectToNoInternet();
         }
@@ -19,7 +19,7 @@ public class App extends Application {
         networkMonitor.register();
     }
 
-    // Méthode de redirection vers l'activité NoInternet
+    // Method to redirect to the NoInternet activity
     private void redirectToNoInternet() {
         Intent noInternetIntent = new Intent(this, NoInternet.class);
         noInternetIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -8,6 +8,8 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 public class NetworkMonitor {
     private final ConnectivityManager connectivityManager;
     private final ConnectivityManager.NetworkCallback networkCallback;
@@ -17,13 +19,13 @@ public class NetworkMonitor {
 
         networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
-            public void onAvailable(Network network) {
-                // Connexion disponible (rien à faire ici si tu veux juste gérer les déconnexions)
+            public void onAvailable(@NonNull Network network) {
+                // Okay
             }
 
             @Override
-            public void onLost(Network network) {
-                // Quand la connexion est perdue
+            public void onLost(@NonNull Network network) {
+                // Connection Lost
                 Toast.makeText(context, "Pas de connexion Internet !", Toast.LENGTH_SHORT).show();
                 Intent noInternetIntent = new Intent(context, NoInternet.class);
                 noInternetIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

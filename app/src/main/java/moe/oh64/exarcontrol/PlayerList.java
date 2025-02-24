@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -34,9 +35,7 @@ public class PlayerList extends AppCompatActivity {
     private String serverId;
     private String token;
 
-    private ListView listView;
     private Spinner listSelector;
-    private Button backButton;
 
     private ArrayAdapter<String> adapter;
     private final ArrayList<String> players = new ArrayList<>();
@@ -48,9 +47,9 @@ public class PlayerList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.playerlist);
 
-        listView = findViewById(R.id.listViewPlayers);
+        ListView listView = findViewById(R.id.listViewPlayers);
         listSelector = findViewById(R.id.spinnerListSelector);
-        backButton = findViewById(R.id.Back);
+        Button backButton = findViewById(R.id.Back);
 
         // Retrieve server ID and token
         serverId = getIntent().getStringExtra("server_id");
@@ -129,14 +128,15 @@ public class PlayerList extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(PlayerList.this, "Failed to fetch lists", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleAvailableListsResponse(responseData));
                 } else {
@@ -179,14 +179,15 @@ public class PlayerList extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(PlayerList.this, "Failed to fetch players", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String responseData = response.body().string();
                     runOnUiThread(() -> handlePlayerListResponse(responseData));
                 } else {
@@ -233,13 +234,13 @@ public class PlayerList extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(PlayerList.this, "Failed to modify player list", Toast.LENGTH_SHORT).show());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> {
                         Toast.makeText(PlayerList.this, "Operation successful!", Toast.LENGTH_SHORT).show();
@@ -248,6 +249,7 @@ public class PlayerList extends AppCompatActivity {
                 } else {
                     String errorMessage = "Error modifying player list";
                     try {
+                        assert response.body() != null;
                         JSONObject jsonResponse = new JSONObject(response.body().string());
                         errorMessage = jsonResponse.optString("error", errorMessage);
                     } catch (Exception e) {
