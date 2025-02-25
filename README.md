@@ -1,6 +1,8 @@
-📦 ExarControl
+![svg(4)](https://github.com/user-attachments/assets/92ecb67f-34f0-44d1-b085-f99296fa445b)
+# ExarControl
 
 ExarControl is an unofficial Android app that lets you control your Exaroton servers directly from your smartphone. With a lightweight and intuitive interface, you can access your servers, manage settings, restart servers, and more—all without opening your browser !
+
 Tested on Android 15 and Android 10, but should work on most phones. Let me know if you have a problem.
 
 🚀 Key Features:
