@@ -35,7 +35,6 @@ public class Information extends AppCompatActivity {
                 "activity: 1.8.0\n" +
                 "constraintlayout: 2.2.0\n" +
                 "okhttp: 4.11.0\n" +
-                "androidsvg: 1.4\n" +
                 "glide: 4.13.2\n" +
                 "junit: 4.13.2\n" +
                 "ext-junit: 1.2.1\n" +

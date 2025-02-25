@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import org.json.JSONObject;
 
@@ -40,6 +41,8 @@ public class Console extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.console);
 
         consoleOutput = findViewById(R.id.console);
@@ -47,6 +50,8 @@ public class Console extends AppCompatActivity {
         Button sendButton = findViewById(R.id.send);
         Button backButton = findViewById(R.id.back);
         scrollView = findViewById(R.id.scroll_view);
+
+
 
         // Retrieve server ID and token
         serverId = getIntent().getStringExtra("server_id");
