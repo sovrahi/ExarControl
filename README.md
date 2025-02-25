@@ -1,6 +1,9 @@
-📦 ExarControl
+![svg(4)](https://github.com/user-attachments/assets/92ecb67f-34f0-44d1-b085-f99296fa445b)
+# ExarControl
 
-ExarControl is an unofficial Android app that lets you control your Exaroton servers directly from your smartphone. With a lightweight and intuitive interface, you can access your servers, manage settings, restart servers, and more—all without opening your browser!
+ExarControl is an unofficial Android app that lets you control your Exaroton servers directly from your smartphone. With a lightweight and intuitive interface, you can access your servers, manage settings, restart servers, and more—all without opening your browser !
+
+Tested on Android 15 and Android 10, but should work on most phones. Let me know if you have a problem.
 
 🚀 Key Features:
 
@@ -14,6 +17,8 @@ ExarControl is an unofficial Android app that lets you control your Exaroton ser
 🔒 Disclaimer:
 
 ExarControl is not affiliated, associated, or endorsed by Exaroton. Please use this app with this understanding.
+The API token is saved on your device only, with basic security because I don't know more, but in short it stays with you.
+This is my first android application and it's far from perfect.
 
 💡 Coming Soon:
 
@@ -27,6 +32,13 @@ ExarControl is not affiliated, associated, or endorsed by Exaroton. Please use t
     Install it on your Android device.
     Log in to your Exaroton account with an API token and start managing your servers!
 
-👥 Contributions:
+Here's the interface (which I'm going to improve, don't worry) it works in dark mode and light mode: 
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+| Light | Dark |
+|-------|-------|
+| ![Screenshot_a](https://github.com/user-attachments/assets/11b49154-6049-426c-a781-236f109eed9e) | ![Screenshot_b](https://github.com/user-attachments/assets/05e4fdcd-56a4-4ceb-9bea-cf3a0da09183) |
+| ![Screenshot_c](https://github.com/user-attachments/assets/cabe222f-ae80-41b5-b725-fe6953448ba4) | ![Screenshot_d](https://github.com/user-attachments/assets/2cd79e9d-29dc-47fb-8624-b5b2b15737b7) |
+| ![Screenshot_e](https://github.com/user-attachments/assets/9c786c07-1a21-4ef2-88b5-121a1d185ff8) | ![Screenshot_f](https://github.com/user-attachments/assets/00b9cd17-88ec-408e-98d4-4d362fb08715) |
+| ![Screenshot_g](https://github.com/user-attachments/assets/85a28fa3-e318-4b37-a23d-a5ae0e8d7e15) | ![Screenshot_h](https://github.com/user-attachments/assets/254ca87f-9927-4367-9081-24f1b72926a4) |
+
+
