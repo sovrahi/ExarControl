@@ -24,4 +24,25 @@
     <string name="CPL">Choose a player list:</string>
     <string name="IMPORTANTCPL">(Unable to get the list of online players at the moment)</string>
     <string name="CommandInput">Enter a command</string>
+    <string name="error_fetching_credit_pools">Failed to fetch credit pools</string>
+    <string name="error_reading_response_body">Error reading response body</string>
+    <string name="error_fetching_credit_pools_response">Error fetching credit pools</string>
+    <string name="no_credit_pool">There is no Credit Pool</string>
+    <string name="error_parsing_credit_pools_data">Error parsing credit pools data</string>
+    <string name="credits">Credits: </string>
+    <string name="servers">Servers: </string>
+    <string name="members">Members: </string>
+    <string name="error_fetching_server_info">Failed to fetch server info</string>
+    <string name="error_fetching_server_status">Failed to fetch server status</string>
+    <string name="error_fetching_motd">Failed to fetch MOTD</string>
+    <string name="error_fetching_ram_cpu">Failed to fetch RAM and CPU info</string>
+    <string name="error_fetching_logs">Failed to fetch server logs</string>
+    <string name="error_uploading_logs">Failed to upload logs</string>
+    <string name="action_completed">%1$s completed</string>
+    <string name="action_failed">%1$s failed</string>
+    <string name="fetching_logs">Fetching logs…</string>
+    <string name="uploading_logs">Uploading logs…</string>
+    <string name="ram_usage">RAM Usage: %1$s%%</string>
+    <string name="server_offline">Server OFFLINE</string>
+    <string name="server_ram_cpu">RAM: %1$d GB\nCPU: %2$d Shared Cores</string>
 </resources>

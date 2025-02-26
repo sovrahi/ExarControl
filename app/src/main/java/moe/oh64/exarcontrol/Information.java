@@ -3,6 +3,7 @@ package moe.oh64.exarcontrol;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +26,7 @@ public class Information extends AppCompatActivity {
             String versionName = packageInfo.versionName;
             versionOption = "Version: " + versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("information", "Error fetching package info", e);
         }
         versionTextView.setText(versionOption);
 

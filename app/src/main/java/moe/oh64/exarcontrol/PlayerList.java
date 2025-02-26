@@ -3,6 +3,7 @@ package moe.oh64.exarcontrol;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,7 +37,6 @@ public class PlayerList extends AppCompatActivity {
     private String token;
 
     private Spinner listSelector;
-
     private ArrayAdapter<String> adapter;
     private final ArrayList<String> players = new ArrayList<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -129,14 +129,13 @@ public class PlayerList extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
+                Log.e("PlayerList", "Failed to fetch lists", e);
                 runOnUiThread(() -> Toast.makeText(PlayerList.this, "Failed to fetch lists", Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleAvailableListsResponse(responseData));
                 } else {
@@ -165,7 +164,7 @@ public class PlayerList extends AppCompatActivity {
                 Toast.makeText(PlayerList.this, "Error retrieving lists", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("PlayerList", "JSON error retrieving lists", e);
             Toast.makeText(PlayerList.this, "JSON error retrieving lists", Toast.LENGTH_SHORT).show();
         }
     }
@@ -180,14 +179,13 @@ public class PlayerList extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
+                Log.e("PlayerList", "Failed to fetch players", e);
                 runOnUiThread(() -> Toast.makeText(PlayerList.this, "Failed to fetch players", Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handlePlayerListResponse(responseData));
                 } else {
@@ -211,7 +209,7 @@ public class PlayerList extends AppCompatActivity {
                 Toast.makeText(PlayerList.this, "Error retrieving players", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("PlayerList", "JSON error retrieving players", e);
             Toast.makeText(PlayerList.this, "JSON error retrieving players", Toast.LENGTH_SHORT).show();
         }
     }
@@ -221,10 +219,10 @@ public class PlayerList extends AppCompatActivity {
         try {
             payload.put("entries", new JSONArray().put(playerName));
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("PlayerList", "Error creating payload", e);
         }
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), payload.toString());
+        RequestBody requestBody = RequestBody.create(payload.toString(), MediaType.get("application/json"));
         Request request = new Request.Builder()
                 .url(API_URL + serverId + "/playerlists/" + listName + "/")
                 .method(method, requestBody)
@@ -235,7 +233,7 @@ public class PlayerList extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
+                Log.e("PlayerList", "Failed to modify player list", e);
                 runOnUiThread(() -> Toast.makeText(PlayerList.this, "Failed to modify player list", Toast.LENGTH_SHORT).show());
             }
 
@@ -253,10 +251,10 @@ public class PlayerList extends AppCompatActivity {
                         JSONObject jsonResponse = new JSONObject(response.body().string());
                         errorMessage = jsonResponse.optString("error", errorMessage);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Log.e("PlayerList", "Error parsing error response", e);
                     }
-                    String finalerror = errorMessage;
-                    runOnUiThread(() -> Toast.makeText(PlayerList.this, "Error: " + finalerror, Toast.LENGTH_SHORT).show());
+                    String finalErrorMessage = errorMessage;
+                    runOnUiThread(() -> Toast.makeText(PlayerList.this, "Error: " + finalErrorMessage, Toast.LENGTH_SHORT).show());
                 }
             }
         });

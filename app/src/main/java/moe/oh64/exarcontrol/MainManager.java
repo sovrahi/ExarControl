@@ -1,10 +1,12 @@
 package moe.oh64.exarcontrol;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import org.json.JSONObject;
 
@@ -49,8 +50,6 @@ public class MainManager extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.mainmanager);
 
         // Initialize UI components
@@ -121,18 +120,17 @@ public class MainManager extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch server info", Toast.LENGTH_SHORT).show());
+                Log.e("MainManager", "Failed to fetch server info", e);
+                runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_server_info, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerInfoResponse(responseData));
                 } else {
-                    runOnUiThread(() -> Toast.makeText(MainManager.this, "Error fetching server info", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_server_info, Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -156,7 +154,7 @@ public class MainManager extends AppCompatActivity {
             fetchServerRamAndCpu();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MainManager", "Error parsing server info response", e);
         }
     }
 
@@ -169,18 +167,17 @@ public class MainManager extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch server status", Toast.LENGTH_SHORT).show());
+                Log.e("MainManager", "Failed to fetch server status", e);
+                runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_server_status, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerStatusResponse(responseData));
                 } else {
-                    runOnUiThread(() -> Toast.makeText(MainManager.this, "Error fetching server status", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_server_status, Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -196,7 +193,7 @@ public class MainManager extends AppCompatActivity {
             updateServerStatus(status);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MainManager", "Error parsing server status response", e);
         }
     }
 
@@ -209,18 +206,17 @@ public class MainManager extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch MOTD", Toast.LENGTH_SHORT).show());
+                Log.e("MainManager", "Failed to fetch MOTD", e);
+                runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_motd, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerMOTDResponse(responseData));
                 } else {
-                    runOnUiThread(() -> Toast.makeText(MainManager.this, "Error fetching MOTD", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_motd, Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -232,7 +228,7 @@ public class MainManager extends AppCompatActivity {
             String motd = jsonResponse.getJSONObject("data").getString("motd");
             tvMOTD.setText(motd);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MainManager", "Error parsing MOTD response", e);
         }
     }
 
@@ -245,18 +241,17 @@ public class MainManager extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch RAM and CPU info", Toast.LENGTH_SHORT).show());
+                Log.e("MainManager", "Failed to fetch RAM and CPU info", e);
+                runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_ram_cpu, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerRamAndCpuResponse(responseData));
                 } else {
-                    runOnUiThread(() -> Toast.makeText(MainManager.this, "Error fetching RAM and CPU info", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_ram_cpu, Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -270,10 +265,10 @@ public class MainManager extends AppCompatActivity {
             // Get RAM and calculate CPU
             int ram = ramData.getInt("ram");
             int cpu = ram / 2;
-            tvServerRam.setText("RAM: " + ram + " GB\nCPU: " + cpu + " Shared Cores");
+            tvServerRam.setText(getString(R.string.server_ram_cpu, ram, cpu));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MainManager", "Error parsing RAM and CPU response", e);
         }
     }
 
@@ -291,6 +286,7 @@ public class MainManager extends AppCompatActivity {
                 webSocket.send(subscribeStats);
             }
 
+            @SuppressLint("StringFormatMatches")
             @Override
             public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
                 try {
@@ -299,14 +295,14 @@ public class MainManager extends AppCompatActivity {
                         JSONObject data = json.getJSONObject("data");
                         JSONObject memory = data.getJSONObject("memory");
                         double ramPercentage = memory.getDouble("percent");
-                        runOnUiThread(() -> tvRamPercentage.setText("RAM Usage: " + ramPercentage + "%"));
+                        runOnUiThread(() -> tvRamPercentage.setText(getString(R.string.ram_usage, ramPercentage)));
                     } else if ("status".equals(json.optString("stream"))) {
                         JSONObject data = json.getJSONObject("data");
                         int status = data.getInt("status");
                         runOnUiThread(() -> updateServerStatus(status));
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e("MainManager", "Error processing WebSocket message", e);
                 }
             }
         });
@@ -323,7 +319,7 @@ public class MainManager extends AppCompatActivity {
         btnReboot.setVisibility(status == 1 ? View.VISIBLE : View.GONE);
 
         if (status == 0) {
-            tvRamPercentage.setText("Server OFFLINE");
+            tvRamPercentage.setText(R.string.server_offline);
         } else {
             // Force RAM usage update on startup
             fetchServerStatusAndRam();
@@ -339,13 +335,12 @@ public class MainManager extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
+                Log.e("MainManager", "Failed to fetch server status and RAM", e);
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleServerStatusAndRamResponse(responseData));
                 }
@@ -353,6 +348,7 @@ public class MainManager extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("StringFormatMatches")
     private void handleServerStatusAndRamResponse(String result) {
         try {
             JSONObject jsonResponse = new JSONObject(result);
@@ -365,10 +361,10 @@ public class MainManager extends AppCompatActivity {
             // Get RAM info
             JSONObject memory = serverData.getJSONObject("memory");
             double ramPercentage = memory.getDouble("percent");
-            tvRamPercentage.setText("RAM Usage: " + ramPercentage + "%");
+            tvRamPercentage.setText(getString(R.string.ram_usage, ramPercentage));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MainManager", "Error parsing server status and RAM response", e);
         }
     }
 
@@ -390,23 +386,23 @@ public class MainManager extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainManager.this, action + " failed", Toast.LENGTH_SHORT).show());
+                Log.e("MainManager", action + " failed", e);
+                runOnUiThread(() -> Toast.makeText(MainManager.this, getString(R.string.action_failed, action), Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
-                    runOnUiThread(() -> Toast.makeText(MainManager.this, action + " completed", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MainManager.this, getString(R.string.action_completed, action), Toast.LENGTH_SHORT).show());
                 } else {
-                    runOnUiThread(() -> Toast.makeText(MainManager.this, action + " failed", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MainManager.this, getString(R.string.action_failed, action), Toast.LENGTH_SHORT).show());
                 }
             }
         });
     }
 
     private void fetchServerLogs() {
-        runOnUiThread(() -> Toast.makeText(MainManager.this, "Fetching logs...", Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.fetching_logs, Toast.LENGTH_SHORT).show());
         Request request = new Request.Builder()
                 .url(API_URL + serverId + "/logs/")
                 .addHeader("Authorization", "Bearer " + token)
@@ -415,26 +411,25 @@ public class MainManager extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to fetch server logs", Toast.LENGTH_SHORT).show());
+                Log.e("MainManager", "Failed to fetch server logs", e);
+                runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_logs, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> uploadLogsToMclogs(responseData));
                 } else {
-                    runOnUiThread(() -> Toast.makeText(MainManager.this, "Error fetching server logs", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_fetching_logs, Toast.LENGTH_SHORT).show());
                 }
             }
         });
     }
 
     private void uploadLogsToMclogs(String logs) {
-        runOnUiThread(() -> Toast.makeText(MainManager.this, "Uploading logs...", Toast.LENGTH_SHORT).show());
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), logs);
+        runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.uploading_logs, Toast.LENGTH_SHORT).show());
+        RequestBody requestBody = RequestBody.create(logs, MediaType.get("application/json"));
         Request request = new Request.Builder()
                 .url(API_URL + serverId + "/logs/share/")
                 .addHeader("Authorization", "Bearer " + token)
@@ -444,18 +439,17 @@ public class MainManager extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainManager.this, "Failed to upload logs", Toast.LENGTH_SHORT).show());
+                Log.e("MainManager", "Failed to upload logs", e);
+                runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_uploading_logs, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleLogsUploadResponse(responseData));
                 } else {
-                    runOnUiThread(() -> Toast.makeText(MainManager.this, "Error uploading logs", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(MainManager.this, R.string.error_uploading_logs, Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -471,7 +465,7 @@ public class MainManager extends AppCompatActivity {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(browserIntent);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MainManager", "Error parsing logs upload response", e);
         }
     }
 

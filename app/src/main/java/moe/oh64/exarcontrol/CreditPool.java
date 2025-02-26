@@ -2,6 +2,7 @@ package moe.oh64.exarcontrol;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -54,17 +55,22 @@ public class CreditPool extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> tvCreditPoolInfo.setText("Failed to fetch credit pools"));
+                Log.e("CreditPool", "Failed to fetch credit pools", e);
+                runOnUiThread(() -> tvCreditPoolInfo.setText(R.string.error_fetching_credit_pools));
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    runOnUiThread(() -> handleCreditPoolsResponse(responseData));
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String responseData = response.body().string();
+                        runOnUiThread(() -> handleCreditPoolsResponse(responseData));
+                    } catch (IOException e) {
+                        Log.e("CreditPool", "Error reading response body", e);
+                        runOnUiThread(() -> tvCreditPoolInfo.setText(R.string.error_reading_response_body));
+                    }
                 } else {
-                    runOnUiThread(() -> tvCreditPoolInfo.setText("Error fetching credit pools"));
+                    runOnUiThread(() -> tvCreditPoolInfo.setText(R.string.error_fetching_credit_pools_response));
                 }
             }
         });
@@ -76,25 +82,24 @@ public class CreditPool extends AppCompatActivity {
             JSONArray pools = jsonResponse.getJSONArray("data");
 
             if (pools.length() == 0) {
-                tvCreditPoolInfo.setText("There is no Credit Pool");
+                tvCreditPoolInfo.setText(R.string.no_credit_pool);
             } else {
                 StringBuilder poolInfo = new StringBuilder();
                 for (int i = 0; i < pools.length(); i++) {
                     JSONObject pool = pools.getJSONObject(i);
                     poolInfo.append(pool.getString("name"))
-                            .append("\n\nCredits: ").append(pool.getInt("credits"))
-                            .append("\nServers: ").append(pool.getInt("servers"))
-                            .append("\nMembers: ").append(pool.getInt("members"))
+                            .append("\n\n").append(getString(R.string.credits)).append(pool.getInt("credits"))
+                            .append("\n").append(getString(R.string.servers)).append(pool.getInt("servers"))
+                            .append("\n").append(getString(R.string.members)).append(pool.getInt("members"))
                             .append("\n\n");
                 }
                 tvCreditPoolInfo.setText(poolInfo.toString());
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            tvCreditPoolInfo.setText("Error parsing credit pools data");
+            Log.e("CreditPool", "Error parsing credit pools data", e);
+            tvCreditPoolInfo.setText(R.string.error_parsing_credit_pools_data);
         }
     }
-
 
     @Override
     protected void onDestroy() {

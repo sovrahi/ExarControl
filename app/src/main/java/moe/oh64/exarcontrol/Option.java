@@ -84,14 +84,13 @@ public class Option extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
+                Log.e("FetchSetting", "Failed to fetch " + type, e);
                 runOnUiThread(() -> Log.e("FetchSetting", "Failed to fetch " + type));
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
                     runOnUiThread(() -> handleSettingResponse(type, responseData));
                 } else {
@@ -113,7 +112,7 @@ public class Option extends AppCompatActivity {
                 editTextRAM.setText(String.valueOf(ram));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("HandleSetting", "Error parsing " + type + " response", e);
         }
     }
 
@@ -131,7 +130,7 @@ public class Option extends AppCompatActivity {
         String urlString = API_URL + serverId + "/options/" + type + "/";
         String jsonBody = type.equals("motd") ? "{\"" + type + "\":\"" + value + "\"}" : "{\"" + type + "\":" + value + "}";
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
+        RequestBody requestBody = RequestBody.create(jsonBody, MediaType.get("application/json"));
         Request request = new Request.Builder()
                 .url(urlString)
                 .addHeader("Authorization", "Bearer " + token)
@@ -141,7 +140,7 @@ public class Option extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
+                Log.e("SaveSetting", "Failed to save " + type, e);
                 runOnUiThread(() -> Log.e("SaveSetting", "Failed to save " + type));
             }
 
