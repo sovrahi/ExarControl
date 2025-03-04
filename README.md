@@ -1,3 +1,8 @@
+# YOU'RE IN BETA.
+# WHAT'S HERE IS UNSTABLE OR NOT FINISHED.
+# IF YOU WANT THE NEXT VERSION IN ADVANCE, LOOK AT THE PRE-RELEASE.
+## Continue if you wish. But compile you will. And bugs you'll have.
+
 ![Logo](https://github.com/Oh64/ExarControl/blob/master/app/src/main/res/drawable/logopng.png?raw=true)
 # ExarControl 
 (This logo is bad)
