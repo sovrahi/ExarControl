@@ -55,6 +55,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="#149514"
         android:text="@string/save"
+        app:icon="@android:drawable/ic_menu_save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextMOTD"/>
@@ -90,13 +91,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
         android:backgroundTint="#149514"
         android:text="@string/save"
-        app:layout_constraintStart_toStartOf="parent"
+        app:icon="@android:drawable/ic_menu_save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextRAM"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextRAM" />
 
     <Button
         android:id="@+id/back"
@@ -106,6 +108,8 @@
         android:text="Back"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        android:layout_margin="4dp"
+        app:icon="?attr/actionModeCloseDrawable"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -21,6 +21,8 @@
         android:text="@string/Back"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:icon="?attr/actionModeCloseDrawable"
+        android:layout_margin="4dp"
         android:layout_alignParentBottom="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

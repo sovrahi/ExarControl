@@ -15,9 +15,11 @@
         android:text="@string/Back"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        android:layout_margin="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:icon="?attr/actionModeCloseDrawable"
         android:layout_marginBottom="16dp"/>
 
     <TextView

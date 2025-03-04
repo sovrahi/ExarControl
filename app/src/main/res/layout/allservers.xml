@@ -21,28 +21,33 @@
         android:id="@+id/TokenDel"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="@string/TokenDel"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="#FF0000"
+        android:text="@string/TokenDel"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:icon="@android:drawable/ic_menu_delete"
+        app:iconTint="#000000"
+        android:layout_margin="4dp"
         app:layout_constraintBottom_toTopOf="@+id/Refresh"
         app:layout_constraintEnd_toEndOf="@+id/server_list"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="5dp"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/Refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="@string/Refresh"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="#149514"
+        android:text="@string/Refresh"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:icon="@android:drawable/ic_popup_sync"
+        android:layout_margin="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/server_list"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/Info"
-        android:layout_marginBottom="5dp"/>
+        app:layout_constraintEnd_toEndOf="@+id/server_list"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Info"

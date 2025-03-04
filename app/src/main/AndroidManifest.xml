@@ -40,6 +40,7 @@
             tools:ignore="DiscouragedApi" />
 
         <activity android:name=".InvalidToken"
+            android:theme="@style/Theme.ExarControl.Dark"
             android:screenOrientation="portrait"
             android:resizeableActivity="false"
             tools:ignore="DiscouragedApi" />
@@ -74,6 +75,7 @@
             tools:ignore="DiscouragedApi" />
 
         <activity android:name=".NoInternet"
+            android:theme="@style/Theme.ExarControl.Dark"
             android:screenOrientation="portrait"
             android:resizeableActivity="false"
             tools:ignore="DiscouragedApi" />

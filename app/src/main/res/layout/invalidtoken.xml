@@ -45,6 +45,8 @@
         android:layout_marginBottom="50dp"
         android:backgroundTint="#149514"
         android:text="@string/TokenButton"
+
+        app:icon="?android:attr/alertDialogIcon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

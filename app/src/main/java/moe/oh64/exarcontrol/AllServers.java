@@ -44,6 +44,13 @@ public class AllServers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.allservers);
 
+        // Setup the ListView and Adapter
+        ListView listView = findViewById(R.id.server_list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(AllServers.this, R.layout.list_item, R.id.list_item_text, serverNames);
+        listView.setAdapter(adapter);
+
+
+
         // Retrieve the token from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences("ExarotonPrefs", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");

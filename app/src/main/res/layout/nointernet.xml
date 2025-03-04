@@ -45,6 +45,7 @@
         android:layout_marginBottom="50dp"
         android:backgroundTint="#149514"
         android:text="@string/Exit"
+        app:icon="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

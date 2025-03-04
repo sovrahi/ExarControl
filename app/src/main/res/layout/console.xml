@@ -82,6 +82,8 @@
         android:textColor="#FFFFFF"
         android:backgroundTint="#149514"
         android:textSize="18sp"
+        app:icon="?attr/actionModeCloseDrawable"
+        android:layout_margin="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
