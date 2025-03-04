@@ -1,4 +1,4 @@
-![svg(4)](https://github.com/user-attachments/assets/92ecb67f-34f0-44d1-b085-f99296fa445b)
+![Logo](https://github.com/Oh64/ExarControl/blob/master/app/src/main/res/drawable/logopng.png?raw=true)
 # ExarControl 
 (This logo is bad)
 
@@ -37,9 +37,9 @@ Here's the interface (which I'm going to improve, don't worry) it works in dark 
 
 | Light | Dark |
 |-------|-------|
-| ![Screenshot_a](https://github.com/user-attachments/assets/11b49154-6049-426c-a781-236f109eed9e) | ![Screenshot_b](https://github.com/user-attachments/assets/05e4fdcd-56a4-4ceb-9bea-cf3a0da09183) |
-| ![Screenshot_c](https://github.com/user-attachments/assets/cabe222f-ae80-41b5-b725-fe6953448ba4) | ![Screenshot_d](https://github.com/user-attachments/assets/2cd79e9d-29dc-47fb-8624-b5b2b15737b7) |
-| ![Screenshot_e](https://github.com/user-attachments/assets/9c786c07-1a21-4ef2-88b5-121a1d185ff8) | ![Screenshot_f](https://github.com/user-attachments/assets/00b9cd17-88ec-408e-98d4-4d362fb08715) |
-| ![Screenshot_g](https://github.com/user-attachments/assets/85a28fa3-e318-4b37-a23d-a5ae0e8d7e15) | ![Screenshot_h](https://github.com/user-attachments/assets/254ca87f-9927-4367-9081-24f1b72926a4) |
+| ![1741110052524](https://github.com/user-attachments/assets/226284a7-8460-4aa5-b650-2d93019d21f1) | ![1741110052520](https://github.com/user-attachments/assets/b1c19c8b-af0d-4bca-a818-74e124f6b1dd) |
+| ![1741110052496](https://github.com/user-attachments/assets/3a50e59d-0d62-4c70-b87a-7505f79ce7fa) | ![1741110052516](https://github.com/user-attachments/assets/70ae3a5c-1bbf-4ee9-8e49-8a5b926fe1be) |
+| ![1741110052493](https://github.com/user-attachments/assets/895eb7d2-f121-46bd-98e2-b8ebdf5f260b) | ![1741110052512](https://github.com/user-attachments/assets/e3924a91-3921-47f6-abd9-7c8fbb61b150) |
+| ![1741110052487](https://github.com/user-attachments/assets/c1aa7330-1e68-402c-9912-9084830890f9) | ![1741110052508](https://github.com/user-attachments/assets/b791828f-b762-437d-91f6-131452080693) |
 
 
