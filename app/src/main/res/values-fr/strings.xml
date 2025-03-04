@@ -1,0 +1,48 @@
+<resources>
+    <!-- Foundation -->
+    <string name="app_name">ExarControl</string>
+    <string name="Exit">Quitter</string>
+    <string name="Back">Retour</string>
+    <string name="loading">Chargement&#8230;</string>
+    <string name="Refresh">Actualiser</string>
+    <string name="send">Envoyer</string>
+    <string name="save">Enregistrer</string>
+    <!-- Main -->
+    <string name="Welcome">Bienvenue !</string>
+    <string name="AuthorNotice">Cette application est NON OFFICIELLE\nmais utilise l\'API officielle</string>
+    <string name="APIT">Jeton API</string>
+    <string name="ModLater">Vous pouvez modifier cela plus tard.</string>
+    <string name="Starter">Commencez avec l\'application !</string>
+    <string name="NeedHelp1">Comment obtenir un jeton API :\nhttps://rd.oh64.moe/exagta</string>
+    <string name="JustLove">Fait avec &lt;3 par Oh64</string>
+    <string name="Info">Application développée par Oh64\nCette application est NON OFFICIELLE\nVotre version est : </string>
+    <string name="TokenDel">Supprimer le jeton</string>
+    <string name="TokenError">Votre jeton sera supprimé pour toujours !\nAu revoir !</string>
+    <string name="TokenButton">Confirmer et entrer un nouveau jeton</string>
+    <string name="InternetError">Veuillez vous connecter à Internet\npour utiliser cette application</string>
+    <string name="DWY">Je suis désolé, vous ne pouvez pas\ngérer les joueurs pour le moment</string>
+    <string name="CPL">Choisissez une liste de joueurs :</string>
+    <string name="IMPORTANTCPL">(Impossible d\'obtenir la liste des joueurs en ligne pour le moment)</string>
+    <string name="CommandInput">Entrez une commande</string>
+    <string name="error_fetching_credit_pools">Échec de la récupération des pools de crédits</string>
+    <string name="error_reading_response_body">Erreur lors de la lecture du corps de la réponse</string>
+    <string name="error_fetching_credit_pools_response">Erreur lors de la récupération des pools de crédits</string>
+    <string name="no_credit_pool">Il n\'y a pas de Pool de Crédits</string>
+    <string name="error_parsing_credit_pools_data">Erreur lors de l\'analyse des données des pools de crédits</string>
+    <string name="credits">Crédits : </string>
+    <string name="servers">Serveurs : </string>
+    <string name="members">Membres : </string>
+    <string name="error_fetching_server_info">Échec de la récupération des informations du serveur</string>
+    <string name="error_fetching_server_status">Échec de la récupération du statut du serveur</string>
+    <string name="error_fetching_motd">Échec de la récupération du MOTD</string>
+    <string name="error_fetching_ram_cpu">Échec de la récupération des informations sur la RAM et le CPU</string>
+    <string name="error_fetching_logs">Échec de la récupération des journaux du serveur</string>
+    <string name="error_uploading_logs">Échec du téléchargement des journaux</string>
+    <string name="action_completed">%1$s terminé</string>
+    <string name="action_failed">%1$s échoué</string>
+    <string name="fetching_logs">Récupération des journaux…</string>
+    <string name="uploading_logs">Téléchargement des journaux…</string>
+    <string name="ram_usage">Utilisation de la RAM : %1$s%%</string>
+    <string name="server_offline">Serveur HORS LIGNE</string>
+    <string name="server_ram_cpu">RAM : %1$d Go\nCPU : %2$d cœurs partagés</string>
+</resources>
