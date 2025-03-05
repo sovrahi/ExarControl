@@ -29,6 +29,7 @@ This is my first android application and it's far from perfect.
 
 💡 Coming Soon:
 
+    Support Acces Limited Account (It works now but it's buggy)
     🔔 Notifications: Get real-time alerts about your server's status.
     🌐 Multilingual Support.
     And more if I have ideas!
