@@ -81,5 +81,7 @@
             android:resizeableActivity="false"
             tools:ignore="DiscouragedApi" />
 
+        <activity android:name=".NotificationPerm" />
+
     </application>
 </manifest>

@@ -38,8 +38,12 @@ public class CreditPool extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("ExarotonPrefs", MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
 
-        // Fetch credit pool information
-        fetchCreditPools();
+        if ("OwO".equals(token)) {
+            runOnUiThread(() -> tvCreditPoolInfo.setText("No Credit Pool..."));
+        } else {
+            // Fetch credit pool information
+            fetchCreditPools();
+        }
 
         // Set up click listener for the back button
         Button backButton = findViewById(R.id.back);

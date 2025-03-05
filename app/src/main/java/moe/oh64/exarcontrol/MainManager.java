@@ -20,6 +20,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -47,6 +49,7 @@ public class MainManager extends AppCompatActivity {
     private final Runnable statusUpdaterRunnable = this::fetchServerStatus;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,20 +76,40 @@ public class MainManager extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("ExarotonPrefs", MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
 
-        // Fetch server info
-        fetchServerInfo();
+        if ("OwO".equals(token)) {
+            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        // Connect WebSocket
-        connectWebSocket();
+            tvServerAddress.setText((serverId != null ? serverId : "Unknown") + ".exaroton.me");
+            tvMOTD.setText("THAT'S THE BEST SERVER");
+            tvServerRam.setText(getString(R.string.server_ram_cpu, (int) (Math.random() * 5), (int) (Math.random() * 2)));
+            tvRamPercentage.setText(String.format("RAM Usage %.1f%%", Math.random() * 100));
 
-        // Update status and RAM every 5 seconds
-        handler.post(statusUpdaterRunnable);
+            scheduler.scheduleWithFixedDelay(() -> {
+                int randomValue = (int) (Math.random() * 11) % 11;
+
+                runOnUiThread(() -> {
+                    updateServerStatus(randomValue);
+                    tvRamPercentage.setText(String.format("RAM Usage %.1f%%", Math.random() * 100));
+                });
+
+            }, 0, 1, TimeUnit.SECONDS);
+        } else {
+            // Fetch server info
+            fetchServerInfo();
+
+            // Connect WebSocket
+            connectWebSocket();
+
+            // Update status and RAM every 5 seconds
+            handler.post(statusUpdaterRunnable);
+
+            btnStartStop.setOnClickListener(v -> handleStartStop());
+            btnReboot.setOnClickListener(v -> handleReboot());
+            btnLogs.setOnClickListener(v -> fetchServerLogs());
+        }
 
         // Set up button click listeners
-        btnStartStop.setOnClickListener(v -> handleStartStop());
-        btnReboot.setOnClickListener(v -> handleReboot());
         btnServerList.setOnClickListener(v -> goToServerList());
-        btnLogs.setOnClickListener(v -> fetchServerLogs());
         btnPlayerList.setOnClickListener(v -> goToPlayerList());
         btnCreditPool.setOnClickListener(v -> goToCreditPool());
         btnconsole.setOnClickListener(v -> goToConsole());

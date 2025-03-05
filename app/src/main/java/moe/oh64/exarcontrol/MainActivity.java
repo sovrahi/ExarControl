@@ -7,6 +7,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,7 +16,13 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editTextToken;
     private Button buttonGo;
+    private int clickCount = 0;
     private static final String PREFS_NAME = "ExarotonPrefs";
+    private final String[] toastMessages = {
+            ">w<",
+            ">wO",
+            ">o<"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
         editTextToken = findViewById(R.id.editTextTextPassword);
         buttonGo = findViewById(R.id.button);
+        TextView textView5 = findViewById(R.id.textView5);
 
         // Check token
         if (!token.isEmpty()) {
             navigateToAllServer();
         }
+
+        Intent intent = new Intent(MainActivity.this, NotificationPerm.class);
+        startActivity(intent);
 
         // Disable Button
         buttonGo.setEnabled(false);
@@ -42,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                buttonGo.setEnabled(s.length() > 0);
+                // Enable the button only if the token length is greater than 10
+                buttonGo.setEnabled(s.length() > 10);
             }
 
             @Override
@@ -54,6 +67,18 @@ public class MainActivity extends AppCompatActivity {
             String token1 = editTextToken.getText().toString().trim();
             saveToken(token1);
             navigateToAllServer();
+        });
+
+        // Set click listener for textView5
+        textView5.setOnClickListener(v -> {
+            clickCount++;
+            if (clickCount >= 3 && clickCount <= 5) {
+                Toast.makeText(MainActivity.this, toastMessages[clickCount - 3], Toast.LENGTH_SHORT).show();
+            }
+            if (clickCount == 5) {
+                saveToken("OwO");
+                navigateToAllServer();
+            }
         });
     }
 
