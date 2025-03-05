@@ -121,6 +121,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/ll_button_container"
         app:layout_constraintBottom_toTopOf="@id/ll_bottom_buttons_container"

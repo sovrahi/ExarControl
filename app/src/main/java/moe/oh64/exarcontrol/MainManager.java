@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -40,14 +39,13 @@ public class MainManager extends AppCompatActivity {
     private String token;
 
     private TextView tvServerAddress, tvServerStatus, tvServerRam, tvRamPercentage, tvMOTD;
-    private Button btnStartStop;
-    private Button btnReboot;
+    private Button btnStartStop, btnReboot;
 
     private WebSocket webSocket;
     private final OkHttpClient client = new OkHttpClient();
     private final Handler handler = new Handler();
     private final Runnable statusUpdaterRunnable = this::fetchServerStatus;
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private ScheduledExecutorService scheduler;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
@@ -77,8 +75,7 @@ public class MainManager extends AppCompatActivity {
         token = sharedPreferences.getString("token", "");
 
         if ("OwO".equals(token)) {
-            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
+            scheduler = Executors.newScheduledThreadPool(1);
             tvServerAddress.setText((serverId != null ? serverId : "Unknown") + ".exaroton.me");
             tvMOTD.setText("THAT'S THE BEST SERVER");
             tvServerRam.setText(getString(R.string.server_ram_cpu, (int) (Math.random() * 5), (int) (Math.random() * 2)));
@@ -86,12 +83,10 @@ public class MainManager extends AppCompatActivity {
 
             scheduler.scheduleWithFixedDelay(() -> {
                 int randomValue = (int) (Math.random() * 11) % 11;
-
                 runOnUiThread(() -> {
                     updateServerStatus(randomValue);
                     tvRamPercentage.setText(String.format("RAM Usage %.1f%%", Math.random() * 100));
                 });
-
             }, 0, 1, TimeUnit.SECONDS);
         } else {
             // Fetch server info
@@ -121,7 +116,9 @@ public class MainManager extends AppCompatActivity {
         super.onDestroy();
         handler.removeCallbacks(statusUpdaterRunnable);
         closeWebSockets();
-        executorService.shutdown();
+        if (scheduler != null) {
+            scheduler.shutdown();
+        }
     }
 
     private void goToServerList() {
@@ -170,10 +167,8 @@ public class MainManager extends AppCompatActivity {
             int status = serverData.getInt("status");
             updateServerStatus(status);
 
-            // Fetch MOTD
+            // Fetch MOTD and RAM/CPU info
             fetchServerMOTD();
-
-            // Fetch RAM and CPU info
             fetchServerRamAndCpu();
 
         } catch (Exception e) {
