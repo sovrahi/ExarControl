@@ -45,4 +45,5 @@
     <string name="ram_usage">Utilisation de la RAM : %1$s%%</string>
     <string name="server_offline">Serveur HORS LIGNE</string>
     <string name="server_ram_cpu">RAM : %1$d Go\nCPU : %2$d cœurs partagés</string>
+    <string name="Notification">Notification</string>
 </resources>

@@ -115,6 +115,34 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_switch_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/ll_button_container"
+        app:layout_constraintBottom_toTopOf="@id/ll_bottom_buttons_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tv_switch_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Notification"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_vertical" />
+
+        <Switch
+            android:id="@+id/switch_on_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/ll_bottom_buttons_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

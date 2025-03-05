@@ -45,4 +45,5 @@
     <string name="ram_usage">RAM Usage: %1$s%%</string>
     <string name="server_offline">Server OFFLINE</string>
     <string name="server_ram_cpu">RAM: %1$d GB\nCPU: %2$d Shared Cores</string>
+    <string name="Notification">Notification</string>
 </resources>
