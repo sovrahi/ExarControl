@@ -32,7 +32,7 @@ import okhttp3.Response;
 
 public class PlayerList extends AppCompatActivity {
 
-    private static final String API_URL = "https://api.exaroton.com/v1/servers/";
+    private final String API_URL = getResources().getString(R.string.api_url) + "servers/";
     private String serverId;
     private String token;
 

@@ -31,7 +31,7 @@ import android.content.pm.PackageManager;
 
 public class AllServers extends AppCompatActivity {
 
-    private static final String API_URL = "https://api.exaroton.com/v1/servers/";
+    private final String API_URL = getResources().getString(R.string.api_url);
     private final Map<String, String> serverIdMap = new HashMap<>();
     private final ArrayList<String> serverNames = new ArrayList<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();

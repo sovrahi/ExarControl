@@ -21,7 +21,8 @@ import okhttp3.Response;
 
 public class CreditPool extends AppCompatActivity {
 
-    private static final String API_URL = "https://api.exaroton.com/v1/billing/pools/";
+
+    private final String API_URL = getResources().getString(R.string.api_url) + "billing/pools/";
     private String token;
     private TextView tvCreditPoolInfo;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();

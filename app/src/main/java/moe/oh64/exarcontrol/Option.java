@@ -27,7 +27,7 @@ public class Option extends AppCompatActivity {
     private String serverId;
     private String token;
 
-    private static final String API_URL = "https://api.exaroton.com/v1/servers/";
+    private final String API_URL = getResources().getString(R.string.api_url) + "servers/";
     private final OkHttpClient client = new OkHttpClient();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
