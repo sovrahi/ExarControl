@@ -1,4 +1,4 @@
-![Logo](https://github.com/Oh64/ExarControl/blob/master/app/src/main/res/drawable/logopng.png?raw=true)
+![Logo](https://oh64.moe/Images/ExarControl.png)
 # ExarControl 
 (This logo is bad)
 
